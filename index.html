@@ -9,28 +9,30 @@
 <body>
     <script>
         (function () {
-            var baseUrl = 'http://students.mimuw.edu.pl:9216';
-            var url = new URL(window.location.href);
-            var newUrl = false;
-            var params = new URLSearchParams(url.search.slice(1));
-            if(params && params.has('p') && params.get('p')) {
-                var path = params.get('p').split('/') || [];
-                if(path.length > 0) {
-                    path.shift();
-                }
-                if(path.length >= 3) {
-                    if(path[0] === 'notebooks') {
+            document.addEventListener("DOMContentLoaded", function() {
+                var baseUrl = 'http://students.mimuw.edu.pl:9216';
+                var url = new URL(window.location.href);
+                var newUrl = false;
+                var params = new URLSearchParams(url.search.slice(1));
+                if(params && params.has('p') && params.get('p')) {
+                    var path = params.get('p').split('/') || [];
+                    if(path.length > 0) {
                         path.shift();
-                        var user = path[0];
-                        path.shift();
-                        newUrl = true;
-                        document.getElementById('content').src = baseUrl + '/user/' + path[1] + '/lab/tree/' + path.join('/');
+                    }
+                    if(path.length >= 3) {
+                        if(path[0] === 'notebooks') {
+                            path.shift();
+                            var user = path[0];
+                            path.shift();
+                            newUrl = true;
+                            document.getElementById('content').src = baseUrl + '/user/' + path[1] + '/lab/tree/' + path.join('/');
+                        }
                     }
                 }
-            }
-            if(!newUrl) {
-                document.getElementById('content').src = baseUrl;
-            }
+                if(!newUrl) {
+                    document.getElementById('content').src = baseUrl;
+                }
+            });
         })();
     </script>
     <iframe id="content" src="http://students.mimuw.edu.pl:9216" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
