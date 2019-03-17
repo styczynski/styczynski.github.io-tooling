@@ -9,18 +9,27 @@
 <body>
     <script>
         (function () {
+            var baseUrl = 'http://students.mimuw.edu.pl:9216';
             var url = new URL(window.location.href);
+            var newUrl = false;
             var params = new URLSearchParams(url.search.slice(1));
             if(params && params.has('p') && params.get('p')) {
-                var path = params.get('p').split('/');
-                if(path && path.length >= 3) {
+                var path = params.get('p').split('/') || [];
+                if(path.length > 0) {
+                    path.shift();
+                }
+                if(path.length >= 3) {
                     if(path[0] === 'notebooks') {
-                        path.pop();
+                        path.shift();
                         var user = path[0];
-                        path.pop();
-                        document.getElementById['content'].src = 'user/' + path[1] + '/lab/tree/' + path.join('/');
+                        path.shift();
+                        newUrl = true;
+                        document.getElementById('content').src = baseUrl + '/user/' + path[1] + '/lab/tree/' + path.join('/');
                     }
                 }
+            }
+            if(!newUrl) {
+                document.getElementById('content').src = baseUrl;
             }
         })();
     </script>
