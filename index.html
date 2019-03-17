@@ -7,7 +7,24 @@
   <meta name="author" content="styczynski">
 </head>
 <body>
-    <iframe src="http://students.mimuw.edu.pl:9216" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+    <script>
+        (function () {
+            var url = new URL(window.location.href);
+            var params = new URLSearchParams(url.search.slice(1));
+            if(params && params.has('p') && params.get('p')) {
+                var path = params.get('p').split('/');
+                if(path && path.length >= 3) {
+                    if(path[0] === 'notebooks') {
+                        path.pop();
+                        var user = path[0];
+                        path.pop();
+                        document.getElementById['content'].src = 'user/' + path[1] + '/lab/tree/' + path.join('/');
+                    }
+                }
+            }
+        })();
+    </script>
+    <iframe id="content" src="http://students.mimuw.edu.pl:9216" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
         Your browser doesn't support iframes
     </iframe>
 </body>
